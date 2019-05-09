@@ -1,0 +1,14 @@
+---
+title: "Over BuurtzorgT"
+description: |
+  Wie zijn wij en waarom doelmatigheid? 
+author: Nico Moleman
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+BuurtzorgT verleent zorg voor cliënten met (zware) psychiatrische problemen die thuis behandeld en ondersteund willen of moeten worden. We versterken de zelfredzaamheid van cliënten met vaak complexe psychiatrische problemen om zo deelname aan het maatschappelijk leven mogelijk te maken, opnames te voorkomen en vooral hoop te hervinden.
+
+De zorg is buurtgericht georganiseerd, in en rond het dagelijks leven van cliënten. Bij BuurtzorgT sluiten we aan op de vraag van de cliënt, elke behandeling is maatwerk. We helpen de cliënt, zijn of haar dierbaren, de huisarts en andere belangrijke betrokkenen om blijvende oplossingen te vinden voor vaak lastige problemen.

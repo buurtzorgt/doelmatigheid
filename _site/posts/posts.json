@@ -1,0 +1,39 @@
+[
+  {
+    "path": "posts/april 2019 intro_statistiek/",
+    "title": "Statistiek & Doelmatigheid",
+    "description": "Grip krijgen op doelmatigheid met behulp van statistiek",
+    "author": [
+      {
+        "name": "Maarten van Meeuwen",
+        "url": {}
+      }
+    ],
+    "date": "2019-05-08",
+    "categories": [
+      "Statistiek",
+      "Doelmatigheid"
+    ],
+    "preview": "posts/april 2019 intro_statistiek/statistiek_files/figure-html5/unnamed-chunk-1-1.png",
+    "last_modified": "2019-05-09T09:17:24+02:00",
+    "preview_width": 1248,
+    "preview_height": 768
+  },
+  {
+    "path": "posts/may 2019 intro_doelmatigheid/",
+    "title": "Doelmatigheid",
+    "description": "Waarom zijn we met doelmatigheid bezig?",
+    "author": [
+      {
+        "name": "Tim Kops",
+        "url": {}
+      }
+    ],
+    "date": "2019-05-03",
+    "categories": [
+      "Doelmatigheid"
+    ],
+    "preview": {},
+    "last_modified": "2019-05-09T08:23:58+02:00"
+  }
+]

@@ -1,0 +1,11 @@
+---
+title: "Blogposts over doelmatigheid"
+listing: posts
+site: distill::distill_website
+description: null
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
