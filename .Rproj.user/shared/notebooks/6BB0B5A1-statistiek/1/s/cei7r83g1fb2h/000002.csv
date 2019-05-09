@@ -1,5 +1,0 @@
-"0","tibble(euros = rnbinom(20000, size = 0.85, mu = 500)) %>% "
-"0","  ggplot(aes(euros)) + geom_histogram() + "
-"0","  labs(x = ""Behandelingsduur in maanden"","
-"0","       y = ""Hoeveelheid"", "
-"0","       title = ""Histogram verdeling van de duur van de behandelingen"")"

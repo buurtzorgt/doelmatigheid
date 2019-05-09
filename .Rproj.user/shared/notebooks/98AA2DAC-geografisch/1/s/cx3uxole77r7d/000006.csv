@@ -1,8 +1,0 @@
-"0","values %>% filter(OAD > 0) %>% 
-  ggplot(aes(x = OAD, y = perhoofd)) + geom_point() + 
-  labs(x = ""Verstedelijking"", y = ""Kosten per verzekerde per postcode gebied"") + geom+_lin()
-"
-"2","Error: unexpected input in:
-""  ggplot(aes(x = OAD, y = perhoofd)) + geom_point() + 
-  labs(x = ""Verstedelijking"", y = ""Kosten per verzekerde per postcode gebied"") + geom+_""
-"

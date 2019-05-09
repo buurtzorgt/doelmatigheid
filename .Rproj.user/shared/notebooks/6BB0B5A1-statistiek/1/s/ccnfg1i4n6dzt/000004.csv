@@ -1,5 +1,0 @@
-"0","len = rweibull(n,  shape = 1, scale = 10) %>% round()
-"
-"2","Error in rweibull(n, shape = 1, scale = 10) %>% round() : 
-  could not find function ""%>%""
-"

@@ -1,1 +1,0 @@
-{"frames":[],"message":"Error: unexpected input in:\n\"  ggplot(aes(x = OAD, y = perhoofd)) + geom_point() + \n  labs(x = \"Verstedelijking\", y = \"Kosten per verzekerde per postcode gebied\") + geom+_\"\n"}
