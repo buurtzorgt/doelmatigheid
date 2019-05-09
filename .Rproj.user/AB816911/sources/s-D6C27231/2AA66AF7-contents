@@ -3,7 +3,7 @@ title: "Doelmatigheid bij BuurtzorgT"
 description: |
 output_dir: "_site"
 base_url: www.doelmatigheidbijbuurtzorgt.nl
-repository_url: https://github.com/buurtzorgt
+repository_url: https://github.com/buurtzorgt/doelmatigheid
 navbar:
   logo:
     image: images/logo.png
