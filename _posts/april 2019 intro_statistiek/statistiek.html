@@ -971,77 +971,118 @@
 <h3 class="d-toc-header">Table of Contents</h3>
 <nav class="d-toc" id="TOC">
 <ul>
-<li><a href="#het-vraagstuk">Het vraagstuk</a></li>
+<li><a href="#het-doelmatigheidsraamwerk">Het doelmatigheidsraamwerk</a></li>
+<li><a href="#het-analytische-vraagstuk">Het analytische vraagstuk</a></li>
 <li><a href="#de-onderdelen-van-het-onderzoek">De onderdelen van het onderzoek</a><ul>
 <li><a href="#onderdeel-1-de-verdeling-van-de-maandelijkse-zorgconsumptie">Onderdeel 1: De verdeling van de maandelijkse zorgconsumptie</a></li>
-<li><a href="#onderdeel-2-de-verdeling-van-de-duur-van-de-behandelingstrajecten">Onderdeel 2: De verdeling van de duur van de behandelingstrajecten</a></li>
+<li><a href="#onderdeel-2-de-verdeling-van-de-duur-van-de-behandeltrajecten">Onderdeel 2: De verdeling van de duur van de behandeltrajecten</a></li>
 <li><a href="#onderdeel-3-verklarende-variabelen">Onderdeel 3: Verklarende variabelen</a></li>
 </ul></li>
-<li><a href="#de-theorie-der-doelmatigheid">De theorie der doelmatigheid</a></li>
+<li><a href="#de-synthese-het-joint-model">De synthese: het joint model</a></li>
+<li><a href="#een-voorbeeld">Een voorbeeld</a></li>
 </ul>
 </nav>
 <hr class="d-toc-separator"/>
-<p>Met behulp van statistiek proberen wij invulling te geven aan doelmatigheid. In zekere zin proberen wij een raamwerk te ontwikkelen om over doelmatigheid in de GGZ na te denken. Binnen dit raamwerk ligt de focus op het analyseren van de ontwikkeling van het bestede zorggeld van een cliënt. Wij willen deze ontwikkelingen, of evoluties, dus eigenlijk verklaren. Dit artikel gaat eerst in op de aard van het analytische probleem en zet daarna het raamwerk uiteen.</p>
-<h1 id="het-vraagstuk">Het vraagstuk</h1>
+<h1 id="het-doelmatigheidsraamwerk">Het doelmatigheidsraamwerk</h1>
+<p>Met behulp van statistiek proberen wij invulling te geven aan doelmatigheid. Wij proberen een raamwerk te ontwikkelen om doelmatigheid binnen de GGZ te analyseren. Binnen dit raamwerk ligt de focus op het verklaren van de ontwikkeling van het bestede zorggeld aan een bepaalde cliënt.</p>
+<p>Het raamwerk stelt dat behandeltrajecten per doelgroep een bepaald verwachtingspatroon hebben. De mate waarin het behandeltraject van een cliënt afwijkt van verwachtingspatroon <em>binnen een doelgroep</em> is een indicatie van de doelmatigheid van de behandeling. Onze modellen gaan invulling geven aan dit verwachtingspatroon. Zo een verwachtingspatroon betreft de duur van het behandeltraject en de hoogte van het bestede zorggeld per maand. De duur van het behandeltraject en de hoogte van het bestede zorggeld moeten gezamenlijk worden gemodelleerd met behulp van een joint model. Dit artikel gaat eerst in op de aard van het analytische probleem en zet daarna het raamwerk verder uiteen.</p>
+<h1 id="het-analytische-vraagstuk">Het analytische vraagstuk</h1>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="statistiek_files/figure-html5/unnamed-chunk-1-1.png" width="624" /></p>
 </div>
 <p>In de grafiek hierboven zijn de evoluties van de zorgconsumptie van twee gesimuleerde cliënten (cliënt A en B) te zien. Cliënt A en B zijn dus geen echte cliënten, al zijn de simulaties wel gebaseerd op de evoluties die wij waarnemen.</p>
-<p>Cliënt A heeft een relatief kort behandelingstraject. De kosten nemen gestaag af en stabiliseren na zo een anderhalf jaar. Het behandelingstraject van cliënt B duurt langer. Zijn zorgconsumptie intensiveert eerst, daalt daarna en lijkt na ongeveer drie jaar weer toe te nemen.</p>
+<aside>
+Met zorgconsumptie bedoelen wij het bestede zorggeld aan een cliënt.
+</aside>
+<p>Cliënt A heeft een relatief kort behandeltraject. De kosten nemen gestaag af en stabiliseren na zo een anderhalf jaar. Het behandeltraject van cliënt B duurt langer. Zijn zorgconsumptie intensiveert eerst, daalt daarna en lijkt na ongeveer drie jaar weer toe te nemen.</p>
 <p>Het contrast tussen deze twee cliënten roept een vraag op: waarom verschillen de evoluties van deze twee gesimuleerde cliënten zo van elkaar? In bredere zin, waarom verschillen de zorgconsumptie-evoluties van elkaar?</p>
-<p>Wij bij BuurtzorgT proberen verschillen tussen onze cliënten te verklaren. Daarvoor maken we gebruik van modellen die uit de biostatistiek komen. Deze modellen zijn onmisbaar bij het modelleren van processen die veranderen door de tijd heen omdat ze gebruik maken van <strong>herhaalde metingen</strong>. We kunnen aan de hand van deze modellen kijken welke factoren deze veranderingen teweeg brengen. In het beste geval hopen we deze evoluties te kunnen gaan voorspellen.</p>
+<p>Wij bij BuurtzorgT proberen verschillen tussen behandelingen van onze cliënten te verklaren. Daarvoor maken we gebruik van modellen die uit de biostatistiek komen. Deze modellen zijn onmisbaar bij het modelleren van processen die veranderen door de tijd heen omdat ze gebruik maken van <strong>herhaalde metingen</strong>. We kunnen aan de hand van deze modellen kijken welke factoren deze veranderingen teweeg brengen. In het beste geval hopen we deze evoluties te kunnen gaan voorspellen.</p>
 <aside>
 Zorgconsumptie zijn herhaalde metingen omdat we per cliënt per maand voor een langere periode kunnen meten wat de zijn zorgconsumptie is geweest.
 </aside>
 <h1 id="de-onderdelen-van-het-onderzoek">De onderdelen van het onderzoek</h1>
-<p>Statistici houden zich over het algemeen bezig met het verklaren van verschillen. Vanuit een puur statistisch perspectief verschillen de behandelingsstrajecten op twee manieren van elkaar:</p>
+<p>Statistici houden zich over het algemeen bezig met het verklaren van verschillen. Vanuit een puur statistisch perspectief verschillen de behandelstrajecten op twee manieren van elkaar:</p>
 <ul>
 <li><p>De hoogte van de maandelijkse kosten ofwel de intensiteit van de behandeling: sommige cliënten kosten meer dan anderen en deze kosten ontwikkelen zich sterk verschillend.</p></li>
-<li><p>De duur van het behandelingstraject: de ene behandeling duurt korter/langer dan de andere.</p></li>
+<li><p>De duur van het behandeltraject: de ene behandeling duurt korter/langer dan de andere.</p></li>
 </ul>
-<p>De hoogte en de duur zijn de twee uitkomstvariabelen van het model. Deze moeten gezamenlijk gemodelleerd worden. Om de hoogte van de zorgconsumptie te modelleren belichten we verdeling van deze variabele en de hiërarchie in deze data. Daarna kijken we naar de duur van de behandelingsstrajecten en de variabelen die we gebruiken om de twee hoofduitkomstvariabelen te modelleren.</p>
+<!-- Duiderlijker  -->
+<p>De hoogte van de kosten en de duur van de behandeling zijn de twee uitkomstvariabelen van het model. Deze moeten gezamenlijk gemodelleerd worden. Om de hoogte van de zorgconsumptie te modelleren belichten we verdeling van deze variabele en de hiërarchie in deze data. Daarna kijken we naar de duur van de behandeltrajecten en de variabelen die we gebruiken om de twee hoofduitkomstvariabelen te modelleren.</p>
 <h2 id="onderdeel-1-de-verdeling-van-de-maandelijkse-zorgconsumptie">Onderdeel 1: De verdeling van de maandelijkse zorgconsumptie</h2>
 <p>Ten eerste proberen wij te begrijpen waarom de ene cliënt meer kost dan de andere. Het is gebruikelijk om eerst naar de verdeling van de kosten, de uitkomstvariabele, te kijken middels een histogram. Een histogram laat zien hoe vaak een bepaalde waarde voorkomt.</p>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="statistiek_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
 </div>
-<p>De histogram laat zien dat kosten scheef verdeeld zijn. Dat wil zeggen dat het leeuwendeel van de maanden gaan gepaard met zorgconsumptie ter hoogte van rond de 500 euro en dat er behoorlijke uitschieters zijn naar boven zijn.</p>
+<p>De histogram laat zien dat kosten scheef verdeeld zijn. Dat wil zeggen dat het leeuwendeel van de maanden gepaard gaat met zorgconsumptie ter hoogte van rond de 500 euro, maar dat er veel uitschieters zijn.</p>
 <p>Feitelijk komt geld voort uit tijd. Behandelaars besteden tijd aan een cliënt en dit zorgt voor kosten. We hebben het dus eigenlijk over een aantal minuten (of uren) per maand. Dat betekent dat we dus een aantal minuten per maand aan het modelleren zijn. Hiervoor moeten we zogeheten <strong>count regressie</strong> gebruiken.</p>
-<p>Nu betrekken we het concept <strong>herhaalde metingen</strong> (longitudinaal is ongeveer hetzelfde) bij de analyse. Standaard (count) modellen nemen aan dat alle gewaarwordingen van de uitkomstvariabele (zorgconsumptie) onafhankelijk zijn van elkaar. Dit is niet zo omdat we meerdere metingen per cliënt hebben, maar ook omdat cliënten dezelfde behandelaars hebben. We spreken over een hiërarchie in de data. De modellen moeten dus worden uitgebreid om met de hiërarchie in de data om te kunnen gaan.</p>
+<p>Nu betrekken we het concept <strong>herhaalde metingen</strong> (longitudinaal is ongeveer hetzelfde) bij de analyse. Standaard (count) modellen nemen aan dat alle gewaarwordingen van de uitkomstvariabele (zorgconsumptie) onafhankelijk zijn van elkaar. Dit is niet zo omdat de data hiërarchisch is geoarganiseerd is.</p>
+<p>De hiërarchie is afgebeeld in de grafiek hieronder. We hebben meerdere herhaalde metingen per cliënt en meerdere cliënten per behandelaar. De zorgconsumptie in een maand hangt waarschijnlijk deels van de zorgconsumptie in de daarop voorafgaande maand, terwijl de zorgconsumptie van de ene cliënt niet afhangt van die van een andere cliënt. Dit betekent dat de data niet meer onafhankhandelijk zijn en dat er een structuur is die gemodelleerd moet worden.</p>
 <figure>
 <img src="hierarchie.png" alt="Hiërachie in de data" /><figcaption>Hiërachie in de data</figcaption>
 </figure>
 <p>Zo een model wat rekening kan houden met hiërarchie is onderdeel van de <strong>generalized linear mixed models</strong>. Dit soort modellen worden breed ingezet in de medicijnontwikkeling en de beoordeling van de effectiviteit van (somatische) medische interventies.</p>
-<h2 id="onderdeel-2-de-verdeling-van-de-duur-van-de-behandelingstrajecten">Onderdeel 2: De verdeling van de duur van de behandelingstrajecten</h2>
+<h2 id="onderdeel-2-de-verdeling-van-de-duur-van-de-behandeltrajecten">Onderdeel 2: De verdeling van de duur van de behandeltrajecten</h2>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="statistiek_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
 </div>
-<p>We zien aanzienlijke verschillen in de duur van de behandelingen, zelfs als we rekening houden met het feit dat sommige behandelingen nog gaande zijn terwijl we enkel data tot de afgelopen maand hebben. Enkele behandelingen duren zo’n vier jaar.</p>
+<p>We zien aanzienlijke verschillen in de duur van de behandelingen. Enkele behandelingen duren zo’n vier jaar en andere 12 maanden.</p>
 <p>In de statistiek zijn speciale modellen ontwikkeld om de duur tot een bepaalde gebeurtenis te modelleren. Aan de hand van deze modellen, ook wel <strong>time-to-event models</strong> genoemd, kunnen we zien welke factoren de duur van een behandeling kunnen voorspellen.</p>
-<p>De gebeurtenis in kwestie is dus het einde van de behandeling, om welke reden dan ook. Dit kan zijn wanneer een DBC wordt afgesloten, of de laatste maand met een zorgconsumptie. Of hebben behandelingsoverwegingen tot een staking van de behandeling geleid. Daarnaast kijken we ook of stabilisatie van de zorgconsumptie een statistisch relevant “einde” is.</p>
+<p>De gebeurtenis in kwestie is dus het einde van de behandeling, om welke reden dan ook. Dit kan zijn wanneer een DBC wordt afgesloten, of de laatste maand met een zorgconsumptie. Of hebben behandeloverwegingen tot een staking van de behandeling geleid. Daarnaast kijken we ook of stabilisatie van de zorgconsumptie een statistisch relevant “einde” is.</p>
 <h2 id="onderdeel-3-verklarende-variabelen">Onderdeel 3: Verklarende variabelen</h2>
-<p>Er zijn twee voorname categorieën van variabelen die verschillen in behandelingstrajecten moeten gaan verklaren: klinische gegevens uit het EPD en variabelen gerelateerd aan sociaal-economisch status. Een klankbordgroep bestaande uit BuurtzorgT-behandelaren denkt inhoudelijk met ons mee om zo veel mogelijk input uit de praktijk te krijgen.</p>
-<p>Klinische gegevens uit het EPD zijn in eerste instantie gerelateerd aan de assen uit het DSM. Denk bijvoorbeeld aan comorbiditeit. In een later stadium gaan we kijken of we de notities van de behandelaars kunnen analyseren met behulp van <strong>natural language processing</strong>.</p>
-<p>We verwachten dat variabelen gerelateerd aan sociaal-economische status meer verschillen kunnen gaan verklaren dan klinische gegevens. Behandelaars hebben aangegeven dat ze op het moment dat ze een wijk binnenlopen al een idee hebben van het behandelingstraject dat komen gaat.</p>
-<p>Verschillen tussen (teams van) behandelaars verklaren waarschijnlijk ook verschillen tussen behandelingstrajecten. Een cliënt zal bij de ene behandelaar een ander traject dan bij een andere behandelaar. Statistici noemen dit <strong>behandelaarseffecten</strong> en generalized linear mixed models kunnen hier goed mee omgaan.</p>
-<h1 id="de-theorie-der-doelmatigheid">De theorie der doelmatigheid</h1>
-<p>Hoe kunnen we aan de hand van de twee de uitkomstkvariabelen en de verklarende variabelen doelmatigheid definiëren?</p>
-<p>De totale zorgconsumptie van een cliënt is een functie van de duur van het behandelingstraject een de maandelijkse hoogte van de zorgconsumptie. De behandeling van cliënt B in de eerste grafiek brengt duidelijk meer kosten voort dan de behandeling van cliënt A.</p>
-<p>Zeer recente ontwikkelingen in de beschikbaarheid van software stellen ons in staan om de duur van een behandelingstraject en de evolutie van de zorgconsumptie gezamenlijk te modelleren, met de toepasselijke naam <strong>joint models</strong>. Het gebruik van dit model is belangrijk wegens twee redenen:</p>
+<p>Er zijn twee voorname categorieën van variabelen die verschillen in behandeltrajecten moeten gaan verklaren: klinische gegevens uit het EPD en variabelen gerelateerd aan sociaal-economisch status. Een klankbordgroep bestaande uit BuurtzorgT-behandelaren denkt inhoudelijk met ons mee om zo veel mogelijk input uit de praktijk te krijgen.</p>
+<p>Klinische gegevens uit het EPD zijn in eerste instantie gerelateerd aan de assen uit de DSM<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Denk bijvoorbeeld aan comorbiditeit. In een later stadium gaan we kijken of we de notities van de behandelaars kunnen analyseren met behulp van <strong>natural language processing</strong>.</p>
+<p>We verwachten dat variabelen gerelateerd aan sociaal-economische status meer verschillen kunnen gaan verklaren dan klinische gegevens. Behandelaars hebben aangegeven dat ze op het moment dat ze een wijk binnenlopen al indicatie hebben van het behandeltraject.</p>
+<p>Verschillen tussen (teams van) behandelaars verklaren waarschijnlijk ook verschillen tussen behandeltrajecten. Statistici noemen dit <strong>behandelaarseffecten</strong> en onze modellen kunnen hier goed mee omgaan.</p>
+<h1 id="de-synthese-het-joint-model">De synthese: het joint model</h1>
+<p>Hoe kunnen we aan de hand van de twee de uitkomstvariabelen en de verklarende variabelen doelmatigheid definiëren?</p>
+<p>De totale zorgconsumptie van een cliënt is een functie van de duur van het behandeltraject een de maandelijkse hoogte van de zorgconsumptie. De behandeling van cliënt B in de eerste grafiek brengt duidelijk meer kosten voort dan de behandeling van cliënt A.</p>
+<p>Zeer recente ontwikkelingen in de beschikbaarheid van software stellen ons in staan om de duur van een behandeltraject en de evolutie van de zorgconsumptie gezamenlijk te modelleren. Dit soort modellen heten toepasselijke <strong>joint models</strong>. Het gebruik van dit model is belangrijk wegens twee redenen:</p>
 <ul>
-<li><p>We vermoeden dat een intensivering van de zorgconsumptie verband houdt tot de duur van een behandelingstraject.</p></li>
-<li><p>We denken ook dat cliënten met “zwaardere diagnoses” langer bij ons in behandeling zijn dan cliënten met kortere behandelingen. Als we niet corrigeren voor de duur van een behandelingstraject leidt dit tot bias. De bias komt voort uit de mogelijkheid dat bijvoorbeeld na twee jaar enkel cliënten met “zwaardere diagnoses” in onze longitudinale data overblijven.</p></li>
+<li><p>We vermoeden dat een intensivering van de zorgconsumptie verband houdt met de duur van een behandeltraject.</p></li>
+<li><p>We denken ook dat cliënten met “zwaardere diagnoses” langer bij ons in behandeling zijn dan cliënten met “lichtere diagnoses”. Als we niet corrigeren voor de duur van een behandeltraject leidt dit tot bias. De bias komt voort uit de mogelijkheid dat bijvoorbeeld na twee jaar enkel cliënten met “zwaardere diagnoses” in onze longitudinale data overblijven.</p></li>
 </ul>
-<p>Wij zijn druk bezig met het <strong>definiëren van doelgroepen</strong> aan de hand van beschikbare variabelen. Deze definitie moet verschillen tussen de evoluties van cliënten verklaren. We zijn dus op zoek naar definities die statistisch en klinisch relevant zijn.</p>
-<p>Aan de hand van joint models kunnen wij tot twee inzichten komen:</p>
+<p>Het raamwerk stelt de gebruiker in staat om zelf doelgroepen te definiëren. Het model berekent per doelgroep een gemiddelde evolutie en kan zo laten zien of de zorgconsumptie-evoluties van doelgroepen statistisch van elkaar verschillen. Er is dus een wisselwerking tussen wat klinisch relevant beschouwd wordt en wat statistisch relevant is.</p>
+<p>Aan de hand van joint models kunnen wij tot twee inzichten komen die relevant zijn voor algemeen inzicht:</p>
 <ol type="1">
 <li><p>Hoe ontwikkelt de gemiddelde zorgconsumptie-evolutie zich per doelgroep?</p></li>
 <li><p>Wat is het effect van een intensivering van de zorgconsumptie op de resterende duur van de behandeling per doelgroep?</p></li>
 </ol>
-<p>Als we dan doelgroepen met elkaar vergelijken, kunnen we zien welke doelgroepen doelmatiger behandeld worden. Doelmatigheid komt dan voort uit de mate waarin de gemiddelde zorgconsumptie afneemt. Een doelmatige behandeling ontwikkelt zich ook op een manier die de behandelingsduur verkort.</p>
-<p>Dit betekent niet dat een doelmatige behandeling per se een laag niveau van zorgconsumptie heeft en korter van duur is. Per slot van rekening is er veel heterogeniteit tussen (doelgroepen van) cliënten en onze modellen proberen daar recht aan te doen.</p>
-<p>Doelmatigheid betreft de ontwikkeling ten opzichte van een verwachtingspatroon dat invulling krijgt aan de hand van de joint models. Deze verwachtingspatronen zullen verschillen per doelgroep.</p>
-<p>Software-matig maken wij gebruik van R <span class="citation" data-cites="rbase">Team (<a href="#ref-rbase">2019</a>)</span>. In het bijzonder: <code>JMbayes</code><span class="citation" data-cites="JMbayes">Rizopoulos (<a href="#ref-JMbayes">2016</a>)</span>, <code>rstanarm</code><span class="citation" data-cites="rstanarm">Goodrich et al. (<a href="#ref-rstanarm">2018</a>)</span> en <code>stan_jm</code><span class="citation" data-cites="stanjm">Brilleman et al. (<a href="#ref-stanjm">n.d.</a>)</span>.</p>
+<p>Vervolgens kunnen we de doelmatigheid van behandelingen van individuele cliënten analyseren. Dit doen we door we de ontwikkeling van de zorgconsumptie van een cliënt naast het verwachtingspatroon van de desbetreffende doelgroep te leggen. Doelmatigheid komt dan voort uit de mate waarin een behandeling afwijkt van het verwachtingspatroon. Behandelingen krijgen vervolgens een doelmatigheidsscore.</p>
+<h1 id="een-voorbeeld">Een voorbeeld</h1>
+<p>Een vereenvoudigd voorbeeld helpt wellicht het raamwerk concreter te maken. Stel dat we doelgroepen definiëren aan de hand van dagbesteding, comorbiditeit van persoonlijkheidsstoornissen, de sociale structuur en de hoogte van de initiële kosten. We hebben vanuit een klinisch oogpunt vermoeden dat dit belangrijke factoren zijn die de evolutie van de zorgconsumptie bepalen. Op basis van deze factoren gaat het model rekenen.</p>
+<p>We willen weten wat het verwachtingspatroon is voor het behandeltraject van een cliënt met het volgende profiel:</p>
+<table>
+<caption>Fictieve doelgroep</caption>
+<thead>
+<tr class="header">
+<th>Factor</th>
+<th>Waarde</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Dagbesteding</td>
+<td>Heeft werk</td>
+</tr>
+<tr class="even">
+<td>Comorbiditeit persoonlijkheidsstoornissen</td>
+<td>Laag</td>
+</tr>
+<tr class="odd">
+<td>Sociale structuur</td>
+<td>Gemiddeld</td>
+</tr>
+<tr class="even">
+<td>Initiële zorgconsumptie</td>
+<td>Gemiddeld</td>
+</tr>
+</tbody>
+</table>
+<p>We laten het model een voorspelling maken aan de hand van de waardes die in de tabel hierboven staan beschreven. De zwarte lijn hieronder geeft het verwachtingspatroon behorend tot de door ons gedefiniëerde doelgroep. We kunnen de evolutie van de zorgconsumptie naast het verwachtingspatroon leggen. We zouden de behandeling van de cliënt als relatief doelmatig beschouwen als de blauwe lijn de zorgconsumptie-evolutie zou weergeven. De oranje lijn geeft een duidelijk minder doelmatige behandeling weer.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="statistiek_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+</div>
+<p>Tenslotte maken wij software-matig gebruik van R <span class="citation" data-cites="rbase">Team (<a href="#ref-rbase">2019</a>)</span>. In het bijzonder: <code>JMbayes</code><span class="citation" data-cites="JMbayes">Rizopoulos (<a href="#ref-JMbayes">2016</a>)</span>, <code>rstanarm</code><span class="citation" data-cites="rstanarm">Goodrich et al. (<a href="#ref-rstanarm">2018</a>)</span> en <code>stan_jm</code><span class="citation" data-cites="stanjm">Brilleman et al. (<a href="#ref-stanjm">n.d.</a>)</span>.</p>
 <div id="refs" class="references">
 <div id="ref-stanjm">
 <p>Brilleman, SL, MJ Crowther, M Moreno-Betancur, J Buros Novik, and R Wolfe. n.d. “Joint Longitudinal and Time-to-Event Models via Stan.” <a href="https://github.com/stan-dev/stancon_talks/">https://github.com/stan-dev/stancon_talks/</a>.</p>
@@ -1056,6 +1097,12 @@ Zorgconsumptie zijn herhaalde metingen omdat we per cliënt per maand voor een l
 <p>Team, R Core. 2019. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.</p>
 </div>
 </div>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>DSM staat voor Diagnostic and Statistical Manual of Mental Disorders en is een handboek voor psychiatrische diagnostiek. De DSM standardiseert diagnostiek. Dit heet voor- en nadelen waar we ons bewust van zijn.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

@@ -18,6 +18,7 @@ navbar:
         - text: "De mensen"
           href: contributors.html
         - text: "DPIA"
+          href: dpia.html
     - icon: fab fa-github
       href: https://github.com/buurtzorgt
 output: distill::distill_article

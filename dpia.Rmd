@@ -1,0 +1,32 @@
+---
+title: "Data Protection Impact Assessment"
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+theme_set(theme_bw())
+```
+De inhoud van deze website is een abstracte weergave van ons onderzoek naar doelmatigheid binnen BuurtzorgT waar wij een aparte DPIA voor hebben. Er staan geen vertrouwelijke persoonsgegevens op deze website. Sommige grafieken zijn op een hele losse manier gebaseerd op  cliënten, maar het is onmogelijk om persoonsgegevens te herleiden aan de hand van data op deze website. Grafieken zijn gebaseerd op wiskundige functies. Een voorbeeld:
+
+```{r}
+sims = rbind(data.frame("Cliënt"= "B", 
+           x = 1:45, 
+           y = 1000 + 600*sin(c(1:45)/7)),
+data.frame("Cliënt" = "A", 
+           x = 1:25,
+           y = 100 + 1200/exp(1:25)^.25))
+
+sims %>% 
+  ggplot(aes(x = x, y = y, colour = Cliënt)) + 
+  geom_line() + 
+  geom_point() + 
+  labs(x = "Maanden", 
+       y = "Maandelijkse zorgconsumptie in euros", 
+       title = "Het zorgverloop van twee behandelingen",
+       colour = "Client")
+```
+
+Het gehele script van deze website is te vinden op onze [Github repository](https://github.com/buurtzorgt/doelmatigheid). 
+
+
