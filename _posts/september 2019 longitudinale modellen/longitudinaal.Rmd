@@ -1,0 +1,166 @@
+---
+title: "Waarom gebruiken wij longitudinale modellen?"
+description: | 
+author: 
+  - name: "Maarten van Meeuwen"
+    affiliation: "BuurtzorgT"
+    affiliation_url: https://www.buurtzorgt.nl
+  - name: "Tim Kops"
+    affiliation: "BuurtzorgT"
+    affiliation_url: https://www.buurtzorgt.nl
+categories:
+  - Doelmatigheid
+  - Statistiek
+output: 
+  distill::distill_article:
+    self_contained: false
+date: 09-06-2019    
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(lme4)
+theme_set(theme_bw())
+```
+
+Hoe een behandeling zich ontwikkelt, de zogeheten evolutie, is een belangrijk aspect in ons onderzoek naar de doelmatigheid van behandelingen. We zien bij BuurtzorgT veel verschillen tussen deze evoluties. Dit willen wij kunnen verklaren. De onderzoeksvraag is dus: waarom zien we verschillen tussen de evoluties van behandelingen? Dit is een typisch longitudinaal vraagstuk omdat we meerdere herhaalde metingen (van zorggebruik) van meerdere behandelingen hebben. 
+
+Vanuit een statistisch perspectief zien we twee soorten van variabiliteit. De eerste soort is variabiliteit tussen behandelingen (intra-behandeling variabiliteit) en de tweede soort komt voort uit veranderingen die tijdens de behandeling plaatsvinden (inter-behandeling variabiliteit). Wij gebruiken longitudinale modellen, en in het bijzonder joint models, omdat dit type modellen beide soorten van variabiliteit kunnen modelleren. Enkel longitudinale modellen zijn hiertoe in staat.
+
+# Soorten van verschillen
+
+In de grafiek hieronder zien we een voorbeeld van twee behandelingen van twee cliënten. De eerste behandeling (de doorgetrokken lijn) begint met 10 uren aan behandeltijd per maand. In maand 5 vindt deze cliënt een baan. We zien het zorggebruik vervolgens sterk afnemen. De behandeling van de andere cliënt heeft een andere evolutie. Deze behandeling begint met een lager zorggebruik, maar de cliënt raakt in maand 4 zijn baan kwijt. Het zorggebruik neemt vervolgens toe. 
+
+```{r, layout = "l-body-outset"}
+rbind(
+  data.frame(zorggebruik = c(rep(10, 5),rep(5, 5)),
+         tijd = c(1:10),
+         client = "A"),
+
+  data.frame(zorggebruik = c(rep(5, 4), rep(8, 6)),
+         tijd = c(1:10),
+         client = "B")) %>% 
+  ggplot(aes(x = tijd, y = zorggebruik, linetype = client)) + geom_line() + 
+  coord_cartesian(ylim = c(0, 12)) + 
+  scale_x_continuous(breaks=seq(0, 10, 3)) + 
+  scale_y_continuous(breaks=seq(0, 12, 2)) + 
+  labs(x = "Maanden", y = "Zorggebruik in uren per maand") + 
+  geom_segment(aes(x = 2, y = 5 + 0.2, xend = 2 , yend = 10 - 0.2, colour = "segment")) +
+  geom_segment(aes(x = 2, y = 3, xend = 8 , yend = 3, colour = "segment"), arrow = arrow()) +
+  annotate("text", x = 3.5, y = 7.5, label = "Intra-behandeling \n variabiliteit") + 
+  annotate("text", x = 5, y = 2, label = "Inter-behandeling \n variabiliteit") + 
+  annotate("text", x = 7, y = 10, label = "Belangrijke gebeurtenissen \n tijdens de behandeling") + 
+  geom_segment(aes(x = 6, y = 10, xend = 5.1 , yend = 10), arrow = arrow()) +
+  geom_segment(aes(x = 6, y = 10, xend = 4.1 , yend = 5), arrow = arrow()) +
+  theme(legend.position = "none", text = element_text(size=15))
+```
+
+
+Intra-behandeling variabiliteit komt bijvoorbeeld doordat cliënten verschillende kenmerken hebben en daardoor tot verschillende doelgroepen behoren.  We verwachten bijvoorbeeld dat cliënten die sociaal geïsoleerd zijn en geen dagbesteding hebben gemiddeld genomen een hoger zorggebruik hebben dan cliënten met een goede sociale structuur en dagbesteding. In de grafiek hierboven geeft de verticale rode lijn de intra-behandeling variabiliteit weer. 
+
+Inter-behandeling variabiliteit is complexer, want deze heeft te maken met tijd. Waarom verschillen opeenvolgende metingen van zorggebruik van elkaar? Ofwel, waarom neemt het zorggebruik toe of af, of waarom blijft het stabiel? Heeft dit te maken met een verandering in het leven van een cliënt? Of is het een direct effect van de behandeling?
+
+# Wat zijn longitudinale modellen? 
+
+Longitudinale modellen zijn speciaal ontwikkeld om met meerdere datapunten per behandeling om te kunnen gaan. Daarmee kun je iets zeggen over waarom verandering plaatsvindt. Een longitudinaal model heet ook wel een multilevel model. In ons voorbeeld hierboven zijn er twee levels: level 1 en level 2. In zekere zin beschrijft level 1 de evoluties van iedere behandeling apart (eigenlijk de inter-behandeling variabiliteit). Level 2 kijkt vervolgens hoe al deze level 1-beschrijvingen van elkaar verschillen (intra-behandeling variabiliteit).
+
+Andere soorten modellen, zoals cross-sectionele regressiemodellen, kunnen maar met één level omgaan. Dit betekent dat je een keuze moet maken tussen level 1 of level 2: wil je meer weten over de evolutie van behandelingen apart óf ben je geïnteresseerd in de verschillen tussen de behandelingen? Stel nou dat longitudinale modellen niet zouden bestaan, maar we willen wel vast kunnen stellen welke factoren voor verschillen tussen behandelingen zorgen. Dan kunnen we te werk gaan zoals hieronder beschreven.
+
+Hieronder zie je een grafiek van gesimuleerde longitudinale data. Iedere kleur behoort tot een cliënt/behandeling. De uitkomstmaat en tijdseenheid zijn nader te definiëren. Hoe zouden we deze data analyseren? 
+
+```{r, layout = "l-body-outset"}
+time = 1:10
+
+plot_evols = function(time, intercept, letter, seed){
+  set.seed(123456  + seed)
+  slope = rnorm(1, sd =0.4)
+  ict = rnorm(1, mean = 5, sd = 1.5)
+  outcome = ict + time*slope + rnorm(10, sd = 0.2)
+  
+  client = paste("Cliënt", letter)
+  data.frame(time = time, outcome = outcome, client = client)
+}
+
+clients = LETTERS[seq( from = 1, to = 9)]
+data = list()
+for (i in c(1:9)){
+  data[[i]] = plot_evols(time = time, intercept = i*1, letter = clients[i], seed = i)
+}
+  
+data_example = do.call("rbind", data)
+
+
+lmmodel = lmer(outcome ~ time + (time |client), data = data_example)
+data_example$mixed_fitted = predict(lmmodel, data_example)
+
+line_data = data.frame(outcome_mixed = c(lmmodel@beta[1] + lmmodel@beta[2]*time),
+                       time = 1:10)
+
+
+ggplot() + 
+  geom_point(data = data_example, aes(x = time, y = outcome, group = client, color = client)) +
+  labs(y = "Uitkomst", x = "Tijd", color = NULL, title = "Longitudinale data") + 
+  theme(legend.position = "none") + 
+  scale_x_continuous(breaks = seq(0, 10, by = 3))
+
+```
+
+
+
+## Een level 1-analyse 
+
+We zouden er dan voor kunnen kiezen om de behandelingen apart te gaan analyseren. Feitelijk leidt dit tot een groot aantal tijdreeksanalyses (level 1-analyses) die waarschijnlijk allemaal iets anders vertellen.  
+
+Een analyse op basis van level 1 is hieronder te zien. Ieder facet heeft een eigen regressiemodel. Dit betekent dat we 9 verschillende regressiemodellen hebben. We kunnen nu iets zeggen over de ontwikkeling die de behandelingen van individuele cliënten doormaken. Maar we kunnen niets zeggen over waarom de lijn bij de ene cliënt daalt en bij de andere stijgt. Kortom, we kunnen niet generaliseren over subgroepen. 
+
+```{r, layout = "l-body-outset"}
+data_example %>% 
+  ggplot(aes(x = time, y = outcome, color = client)) + 
+  geom_point() +
+  geom_smooth(method = "lm") + 
+  facet_wrap(.~client, ncol = 3) + 
+  labs(y = "Uitkomst", x = "Tijd", color = NULL, title = "Level 1-analyse") + 
+  theme(legend.position = "none") + 
+  scale_x_continuous(breaks = seq(0, 10, by = 3))
+```
+
+## Een level 2-analyse 
+
+We kunnen ook een level 2-achtige analyse doen. In dit geval kijkt één regressiemodel naar een momentopname van alle behandelingen of naar samenvattende statistieken. De vraag is dan welke momentopname of welke statistiek. Dit kan bijvoorbeeld het zorggebruik na een maand of na een jaar zijn. Een dergelijke momentopname vereist dus dat je een behandeling samenvat in één getal. Als je bijvoorbeeld in de momentopname naar de hoogte van het zorggebruik van een maand kijkt, dan negeer je feitelijk een heleboel data die ook iets zeggen over het zorggebruik. 
+
+Een voorbeeld van een momentopname is hieronder gegeven. In dit geval willen we weten wat de verschillen verklaart tussen de waardes die zijn gemeten in de 10e maand. Wellicht is dit interessant, maar deze analyse hanterend gooien we veel informatie weg. 
+
+```{r, layout = "l-body-outset"}
+data_example %>% filter(time > 9) %>%
+  ggplot() + 
+  geom_point(aes(x = time, y = outcome, group = client, color = client)) +
+  labs(y = "Uitkomst", x = "Tijd", color = NULL, title = "Dwarsdoorsnede") + 
+  theme(legend.position = "none") + 
+  coord_cartesian(xlim = c(0, 10)) + 
+  scale_x_continuous(breaks = seq(0, 10, by = 3))
+```
+
+
+Daarnaast is het mogelijk om een behandeling samen te vatten door middel van een statistiek. Dit kan zijn de mediaan (of gemiddelde) zorggebruik, of volatiliteit. Vervolgens kunnen cross-sectionele regressiemodellen verschillen tussen deze statistieken proberen te verklaren. 
+
+Bij het gebruik van een bepaalde statistiek of een momentopname om een behandeling samen te vatten reduceer je de behandeling tot een enkel cijfer. Behandelingen veranderen, zijn dynamisch en zijn complex. Dit betekent dat cross-sectionele analyse hoogstwaarschijnlijk tot arbitraire vaststellingen leidt, waarmee het afbreuk doet aan de complexiteit van de behandelingen in de GGZ.
+
+# De kracht van longitudinale modellen
+
+Wij betogen dat longitudinale modellen in een zorgcontext optimaal zijn, omdat je level 1 én level 2 in de analyse kan betrekken. Deze modellen vatten op een elegante manier de evoluties van behandelingen samen. Daardoor kun je aan de hand van één model verschillen tussen behandelingen verklaren en antwoorden krijgen op vragen waarom behandelingen door de tijd heen veranderen.
+
+Hieronder zien we waarom een longitudinaal de data optimaal gebruikt. De dunne lijntjes zijn level 1-schattingen. De dikke zwarte lijn is een gemiddelde evolutie van alle cliënten/behandelingen. We kunnen nu vragen gaan stellen waarom de waarde van de uitkomstmaat afneemt voor bepaalde cliënten en toeneemt voor anderen. 
+
+
+```{r, layout = "l-body-outset"}
+ggplot() + 
+  geom_point(data = data_example, aes(x = time, y = outcome, group = client, color = client)) +
+  geom_line(data=line_data, aes(x = time, y = outcome_mixed), size = 2) + 
+  geom_line(data=data_example, aes(x = time, y = mixed_fitted, group = client)) + 
+  labs(y = "Uitkomst", x = "Tijd", color = NULL, title = "Longitudinaal model") + 
+  theme(legend.position = "none") + 
+  scale_x_continuous(breaks = seq(0, 10, by = 3))
+```
+
+Op basis van longitudinale modellen kunnen we dus uitspraken doen over hoe behandelingen zich ontwikkelen en waarom dat zo is. Ze kunnen leiden tot betekenisvolle inzichten die bruikbaar zijn in de behandelpraktijk. En dat is precies wat we willen.

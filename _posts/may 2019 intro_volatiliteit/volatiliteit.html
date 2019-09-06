@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Volatiliteit</title>
+  
+  
+  
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2019-05-23"/>
+  <meta property="article:created" itemprop="dateCreated" content="2019-05-23"/>
+  <meta name="article:author" content="Tim Kops"/>
+  
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Volatiliteit"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:locale" content="en_US"/>
+  
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="Volatiliteit"/>
+  
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","categories","output","date"]}},"value":[{"type":"character","attributes":{},"value":["Volatiliteit"]},{"type":"NULL"},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Tim Kops"]},{"type":"character","attributes":{},"value":["BuurtzorgT"]},{"type":"character","attributes":{},"value":["https://www.buurtzorgt.nl"]}]}]},{"type":"character","attributes":{},"value":["Doelmatigheid","Volatiliteit","Statistiek"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["05-23-2019"]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["data_evolutie.Rds","histogram1.png","histogram2.png","plot1.png","plot2.png","volatiliteit_files/bowser-1.9.3/bowser.min.js","volatiliteit_files/distill-2.2.21/template.v2.js","volatiliteit_files/figure-html5/unnamed-chunk-1-1.png","volatiliteit_files/jquery-1.11.3/jquery.min.js","volatiliteit_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+  
+  <style type="text/css">
+  
+  body {
+    background-color: white;
+  }
+  
+  .pandoc-table {
+    width: 100%;
+  }
+  
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+  
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+  
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+  
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+  
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+  
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+  
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .shaded .shaded-content {
+    background: white;
+  }
+  
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+  
+  .hidden {
+    display: none !important;
+  }
+  
+  d-article {
+    padding-bottom: 30px;
+  }
+  
+  d-appendix {
+    padding-top: 30px;
+  }
+  
+  d-article>p>img {
+    width: 100%;
+  }
+  
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+  
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+  
+  /* CSS for table of contents */
+  
+  .d-toc {
+    color: rgba(0,0,0,0.8);
+    font-size: 0.8em;
+    line-height: 1em;
+  }
+  
+  .d-toc-header {
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 1.3em;
+  }
+  
+  .d-toc a {
+    border-bottom: none;
+  }
+  
+  .d-toc ul {
+    padding-left: 0;
+  }
+  
+  .d-toc li>ul {
+    padding-top: 0.8em;
+    padding-left: 16px;
+    margin-bottom: 0.6em;
+  }
+  
+  .d-toc ul,
+  .d-toc li {
+    list-style-type: none;
+  }
+  
+  .d-toc li {
+    margin-bottom: 0.9em;
+  }
+  
+  .d-toc-separator {
+    margin-top: 20px;
+    margin-bottom: 2em;
+  }
+  
+  .d-article-with-toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  
+  
+  
+  /* Tweak code blocks (note that this CSS is repeated above in an injection
+     into the d-code shadow dom) */
+  
+  d-code {
+    overflow-x: auto !important;
+  }
+  
+  pre.d-code code.d-code {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+  
+  pre.text-output {
+  
+    font-size: 12px;
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+  
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+  
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+  
+  @media(min-width: 768px) {
+  
+  d-code {
+    overflow-x: visible !important;
+  }
+  
+  pre.d-code code.d-code  {
+      padding-left: 18px;
+      font-size: 14px;
+  }
+  pre.text-output {
+    font-size: 14px;
+  }
+  }
+  
+  /* Figure */
+  
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+  
+  .figure img {
+    width: 100%;
+  }
+  
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+  
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+  
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+  
+  
+  
+  /* Tweak 1000px media break to show more text */
+  
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+  
+    .grid {
+      grid-column-gap: 16px;
+    }
+  
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+  
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+  
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+  
+  
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+  
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  
+  
+  /* Social footer */
+  
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+  
+  .disqus-comments {
+    margin-right: 30px;
+  }
+  
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+  
+  #disqus_thread {
+    margin-top: 30px;
+  }
+  
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+  
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+  
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+  
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+  
+  
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+  
+  
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+  
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+  
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+  
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+  
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+  
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+  
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+  
+  
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+  
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+  
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+  
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+  
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+  
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+  
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+  
+  </style>
+  
+  <script type="application/javascript">
+  
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+  
+  // show body when load is complete
+  function on_load_complete() {
+  
+    // set body to visible
+    document.body.style.visibility = 'visible';
+  
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+  
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+  
+  function init_distill() {
+  
+    init_common();
+  
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+  
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+  
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+  
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+  
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+  
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+  
+    // create d-bibliography
+    var bibliography = $('<d-bibliography></d-bibliography>');
+    $('#distill-bibliography').wrap(bibliography);
+  
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+  
+    // replace citations with <d-cite>
+    $('.citation').each(function(i, val) {
+      appendix = true;
+      var cites = $(this).attr('data-cites').split(" ");
+      var dt_cite = $('<d-cite></d-cite>');
+      dt_cite.attr('key', cites.join());
+      $(this).replaceWith(dt_cite);
+    });
+    // remove refs
+    $('#refs').remove();
+  
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+  
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-toc a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+  
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+  
+    // replace code blocks with d-code
+    $('pre>code').each(function(i, val) {
+      var code = $(this);
+      var pre = code.parent();
+      var clz = "";
+      var language = pre.attr('class');
+      if (language) {
+        // map unknown languages to "clike" (without this they just dissapear)
+        if ($.inArray(language, ["bash", "clike", "css", "go", "html",
+                                 "javascript", "js", "julia", "lua", "markdown",
+                                 "markup", "mathml", "python", "svg", "xml"]) == -1)
+          language = "clike";
+        language = ' language="' + language + '"';
+        var dt_code = $('<d-code block' + language + clz + '></d-code>');
+        dt_code.text(code.text());
+        pre.replaceWith(dt_code);
+      } else {
+        code.addClass('text-output').unwrap().changeElementType('pre');
+      }
+    });
+  
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+  
+      // capture layout
+      var layout = $(this).attr('data-layout');
+  
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('d-code, pre.text-output, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+  
+  
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+  
+    // load distill framework
+    load_distill_framework();
+  
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+  
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+  
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+  
+      // table of contents
+      if (have_authors) // adjust border if we are in authors
+        $('.d-toc').parent().addClass('d-article-with-toc');
+  
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+  
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+  
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+  
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+  
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+  
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+  
+      // inject pre code styles (can't do this with a global stylesheet b/c a shadow root is used)
+      $('d-code').each(function(i, val) {
+        var style = document.createElement('style');
+        style.innerHTML = 'pre code { padding-left: 10px; font-size: 12px; border-left: 2px solid rgba(0,0,0,0.1); } ' +
+                          '@media(min-width: 768px) { pre code { padding-left: 18px; font-size: 14px; } }';
+        if (this.shadowRoot)
+          this.shadowRoot.appendChild(style);
+      });
+  
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+  
+      // clear polling timer
+      clearInterval(tid);
+  
+      // show body now that everything is ready
+      on_load_complete();
+    }
+  
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+  
+  }
+  
+  function init_downlevel() {
+  
+    init_common();
+  
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+  
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+  
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+  
+    // remove toc
+    $('.d-toc-header').remove();
+    $('.d-toc').remove();
+    $('.d-toc-separator').remove();
+  
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+  
+  
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+  
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+  
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+  
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+  
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+  
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+  
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+  
+    $('body').addClass('downlevel');
+  
+    on_load_complete();
+  }
+  
+  
+  function init_common() {
+  
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+  
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+  
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+  
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+  
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+  
+      }
+    });
+  
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+  
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+  
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+  
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+  
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+  
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+  
+  </script>
+  
+  <!--/radix_placeholder_distill-->
+  <script src="volatiliteit_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="volatiliteit_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="volatiliteit_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="volatiliteit_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Volatiliteit","authors":[{"author":"Tim Kops","authorURL":"#","affiliation":"BuurtzorgT","affiliationURL":"https://www.buurtzorgt.nl"}],"publishedDate":"2019-05-23T00:00:00.000+02:00","citationText":"Kops, 2019"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Volatiliteit</h1>
+
+</div>
+
+<div class="d-byline">
+  Tim Kops  (BuurtzorgT)<a href="https://www.buurtzorgt.nl" class="uri">https://www.buurtzorgt.nl</a>
+  
+<br/>05-23-2019
+</div>
+
+<div class="d-article">
+<p>Bij BuurtzorgT zien we dat sommige behandelingen zich op een volatiele manier ontwikkelen. Dit wil zeggen dat het zorggebruik sterk kan verschillen van maand tot maand. In dit blog wordt “volatiliteit” verder toegelicht.</p>
+<p>In de sociale psychiatrie, en dus zeker ook bij BuurtzorgT, zijn behandelingen minder in beton gegoten dan in de reguliere GGZ met behandelprogramma’s. Per definitie is er in de sociale psychiatrie dus meer volatiliteit in het zorggebruik waar te nemen. Het is in het licht van doelmatige besteding van zorggeld een interessant onderwerp om nader te bekijken met behulp van statistiek. We stellen onszelf eerst een paar vragen.</p>
+<ol type="1">
+<li><strong>Is volatiliteit goed of slecht voor cliënten?</strong></li>
+</ol>
+<p>Het hangt sterk af van de reden waarom een behandeling volatiel is. Een cliënt in crisis wil niet wachten tot hij volgens de planning aan de beurt is. Hij wil gezien worden als de nood hoog is. Dat is altijd onplanbaar qua moment en qua duur. Er zijn ook cliënten die vooral baat hebben bij structuur en juist bij planbare, voorspelbare behandelingen. De GGZ heeft zich ontwikkeld tot een sector waar behandelingen veelal zijn vormgegeven in protocollen, in planbare reeksen sessies van 45 minuten, gegeven door behandelaars met een overvolle agenda. Veel cliënten worden eens per twee weken gezien. Een afwijking van dit patroon is onwenselijk omdat te veel andere cliënten en werkzaamheden dan in de knel komen. Behandelaars hebben vaak ook een grote caseload, meestal goed afgestemd op het patroon van eens per twee weken een sessie. Het is een wat kunstmatige manier van hulpverlenen, zij het dat het voor bepaalde groepen cliënten volstaat. Zou je echter helemaal opnieuw nadenken over de inrichting van GGZ-behandelingen dan kom je bij een grote groep cliënten niet uit op dit model. Je zou een cliënt vaker kunnen zien, in langere of juist kortere sessies, op andere locaties en hierdoor meer kunnen meebewegen met de flow van de behandeling en het effect daarvan op de cliënt.</p>
+<ol start="2" type="1">
+<li><strong>Past een zekere mate van volatiliteit goed bij de manier waarop BuurtzorgT werkt?</strong></li>
+</ol>
+<p>De behandelingen van BuurtzorgT zijn behandelingen die “van nature” ontstaan. Er is een structuur en volgordelijkheid, maar tempo en maat zijn vrij. Behandelaars hebben ook voldoende agendaruimte om deze vrijheid optimaal in te zetten. Dat geeft automatisch volatiliteit en daarmee een ander patroon dan de vermoedelijk strakkere lijnen van de behandelprogramma’s van de reguliere GGZ. Volatiliteit is een uitkomst van de werkwijze van de BuurtzorgT en de werkwijze is een vertaling van onze inhoudelijke uitgangspunten. Volatiliteit is volgens ons dus precies wat nodig is bij onze doelgroep.</p>
+<ol start="3" type="1">
+<li><strong>Wat is de optimale balans tussen plannen en volatiliteit?</strong></li>
+</ol>
+<p>Dat verschilt per doelgroep. Optimaal is het een mix van hetgeen de behandelaar vanuit zijn professionele kijk het beste acht enerzijds en hetgeen de cliënt vraagt anderzijds. Een behandeling vraagt altijd om een structuur van planvorming, evaluatie, bijstelling, etc. Maar daar binnen zou er ruimte moeten zijn voor de meest effectieve invulling van contactmomenten. Het zou bij reguliere GGZ tot gevolg kunnen hebben dat een behandelaar een kleinere caseload krijgt wat mogelijk leidt tot een grotere wachttijd aan de voordeur. Maar dat is geen zekerheid. Je zou ook kunnen verwachten dat behandelingen sneller resultaat hebben en dat de doorstroming hoger wordt. Veel behandelingen in de GGZ duren relatief lang omdat cliënten in behandeling blijven zonder helder eindpunt. Logistiek gezien is het beter om een kleinere caseload te hebben. Dit geeft vrijwel altijd een hogere doorloopsnelheid en een kortere wachttijd aan de voordeur.</p>
+<p>In 2009 heb ik samen met de behandelaars op een RIAGG met een psychotherapeutische polikliniek in vrij korte tijd de wachttijd kunnen terugbrengen van 9 maanden naar 6 weken door het systematisch verkleinen van de caseload tot een rekenkundig optimum. Hierbij hielden we rekening met de verschillende fases in de behandelingen en wat dit betekende voor de contactfrequentie. Vanwege de kortere wachttijd nam vervolgens het aantal aanmeldingen weer toe, maar dat leidde niet tot een hogere wachttijd. Behandelaars hadden een net zo volle agenda, maar ervoeren meer ruimte in hun hoofd vanwege het ontbreken van de druk die een grote caseload en lange wachttijd met zich meebrengt. Ze waren ook veel beter bij met hun dossiervoering en administratie.</p>
+<p>Terug naar volatiliteit. Als een bepaalde mate van volatiliteit de zorg ten goede komt, dan is het zaak dat behandelaars hiervoor agendaruimte houden, zodat andere cliënten niet de dupe worden van de volatiliteit van de behandeling van andere cliënten. Het heeft dus ook veel te maken met capaciteitsplanning. De sociale psychiatrie van BuurtzorgT is wat anders dan de psychotherapeutische behandelingen van een RIAGG destijds. Sociale psychiatrie vereist een kleinere caseload en een hogere volatiliteit dan een psychotherapeutische behandeling, maar in beide gevallen zou er gelegenheid moeten zijn om de volatiliteit die past bij de doelgroep te laten ontstaan.</p>
+<p>Uiteraard bestaat er ook een risico op een te hoge mate van volatiliteit. Ook dat is weer onderdeel van het professioneel handelen. Vooral in de sociale psychiatrie is het verleidelijk voortdurend te reageren op hetgeen zich voordoet, zeker als er in praktische zin ruimte voor is. Begrenzen én het organiseren van andere “hulplijnen” is onderdeel van de behandeling bij BuurtzorgT. Zien we na verloop van tijd geen afname van volatiliteit in een behandeling dan mag je veronderstellen dat er op dit punt verbetering mogelijk is.</p>
+<ol start="4" type="1">
+<li><strong>Moeten we gaan nadenken over of (en hoe) we volatiliteit moeten beteugelen?</strong></li>
+</ol>
+<p>Het lijkt zeker zinvol om de volatiliteit van de behandelingen onder de loep te nemen. Zoals aangegeven is het optimum geen hard gegeven, maar afhankelijk van de doelgroep en mogelijk de fase van de behandeling. Met statistiek kunnen we onderzoeken waar afwijkingen zijn op de te verwachten volatiliteit in relatie tot het beloop van behandelingen. Hiermee kunnen we waarschijnlijk uitspraken doen over de doelmatigheid van de behandelingen.</p>
+<h1 id="een-introductie-van-volatiliteit-en-statistiek">Een introductie van volatiliteit en statistiek</h1>
+<p>Bij de toepassing van statistiek op het begrip volatiliteit kijken we eerst naar het zorggebruik per maand en hoe we dit zorggebruik het beste cijfermatig kunnen uitdrukken.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Statistiek</th>
+<th>Waarde</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Gemiddelde</td>
+<td>404</td>
+</tr>
+<tr class="even">
+<td>Mediaan</td>
+<td>312</td>
+</tr>
+</tbody>
+</table>
+<p>In de tabel hierboven zijn twee statistieken te zien: het gemiddelde en de mediaan van het zorggebruik per maand. Het gemiddelde is berekend door het totaal aan kosten te delen door het totaal aantal behandelmaanden. Als je alle maanden van goedkoop naar duur sorteert en dan de middelste neemt, vind je de mediaan.</p>
+<p>Als statistiek heeft het gemiddelde een hogere gevoeligheid voor uitschieters dan de mediaan. Gezien er veel uitschieters zijn, geeft het gemiddelde een vertekend beeld van de kosten van “normale” behandelmaand. De mediaan is dus in deze context een geschiktere statistiek om een beeld te krijgen van de hoogte van het zorggebruik van een “normale” behandelmaand.</p>
+<p><img src="histogram1.png" /></p>
+<p>De histogram laat zien dat kosten scheef verdeeld zijn. Dit wil zeggen dat het leeuwendeel van de maanden gepaard gaat met zorggebruik ter hoogte van rond de 312 euro (zie de gestreepte zwarte lijn), maar dat er veel uitschieters zijn.</p>
+<h2 id="volatiliteit">Volatiliteit</h2>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="volatiliteit_files/figure-html5/unnamed-chunk-1-1.png" width="624" /></p>
+</div>
+<p>De grafiek hierboven is een voorbeeld van de evolutie van het zorggebruik van een intensieve behandeling. Dit is een redelijk extreem voorbeeld. Het is een goede illustratie om het concept volatiliteit toe te lichten. De zwarte hoekerige lijn vertegenwoordigt het maandelijkse zorggebruik en de blauwe lijn geeft een trendlijn weer. De zwarte lijn laat dus zien dat de kosten sterk verschillen van maand tot maand. De blauwe lijn laat zien dat het niveau van het zorggebruik toeneemt tijdens de behandeling.</p>
+<p>Beide lijnen vertellen een verhaal. Als we de verschillen tussen de evoluties van behandeltrajecten willen analyseren dan is de blauwe lijn waarschijnlijk het meest interessant.</p>
+<p>In het kader van volatiliteit is het verschil tussen de zwarte en de blauwe lijn interessant. In statistiek jargon is volatiliteit de standaardafwijking van de residuen. Een residue is simpelweg het verschil tussen de blauwe en zwarte lijn. Per behandeling kunnen we de volatiliteit zo berekenen:</p>
+<ol type="1">
+<li><p>Neem het kwadraat van ieder residu en tel ze allemaal bij elkaar op.</p></li>
+<li><p>Deel door het aantal behandelmaanden en neem hier de vierkantswortel van.</p></li>
+</ol>
+<p>Als we deze zouden berekenen voor de behandeling hierboven in de grafiek levert dat een volatiliteit van 926 op. Vervolgens berekenen we voor alle behandelingen de volatiliteit. De histogram hieronder geeft de verdeling van alle volatiliteit-statistieken weer.</p>
+<p><img src="histogram2.png" /></p>
+<p>We zien hier inderdaad dat de meeste behandelingen een aanzienlijk lagere volatiliteit hebben dan de 926 uit ons extreme voorbeeld. Wel is het zo dat in het histogram alleen behandeltrajecten van meer dan 10 maanden zijn weergegeven. Een standaardafwijking van een kort behandeltraject als statistiek is namelijk niet zo betekenisvol.</p>
+<h2 id="samenhang-volatiliteit-en-andere-statistieken">Samenhang volatiliteit en andere statistieken</h2>
+<p><img src="plot1.png" /></p>
+<p>In welke mate hangt volatiliteit samen met andere variabelen? Het ligt voor de hand dat volatielere behandelingen een hogere zorggebruik-mediaan hebben. We zien hier een correlatie van ongeveer 0.6. Dit is logisch vanuit een behandelperspectief maar vooral vanuit een statistisch perspectief: kosten zijn scheef verdeeld. Duurdere behandelingen hebben meer ruimte om te fluctueren dan goedkopere behandelingen. Maandelijks zorggebruik kan niet lager zijn dan 0 euro en daarom kan een goedkopere behandelingen enkel naar boven uitschieten.</p>
+<p>De grafiek hierboven plot de hoogte van de mediaan-zorggebruik per behandeling tegen haar volatiliteit. We zien inderdaad een verband tussen de hoogte van de mediaan kosten en volatiliteit.</p>
+<p>Interessant is ook dat we geen behandelingen zien met een hoog zorggebruik-mediaan en met een lage volatiliteit. Ook zien we veel behandelingen met een mediaan van 0. Dit zijn behandelingen van cliënten die tijdens een groot deel van hun behandeltraject niet behandeld zijn.</p>
+<p><img src="plot2.png" /></p>
+<p>Ook kunnen we het totale zorggebruik van een behandeling plotten tegen haar volatiliteit (zie grafiek hierboven). Er lijkt een duidelijk verband te zijn: duurdere behandelingen zijn volatieler. De correlatie tussen deze twee variabelen is 0.77. Het totaal aan zorggebruik van een behandeling komt deels voort uit de duur van het behandeltraject. Een traject wat langer duurt zal ook duurder zijn.</p>
+<p>De kleur van de datapunten in de grafiek hierboven geeft de duur van het behandeltraject weer. Hoe donkerder de kleur, hoe langer een behandeling duurt (maanden). We zien eigenlijk twee puntenwolken: één met kortere behandelingen en één met langere behandelingen. Voor de groep met kortere behandeltrajecten is er een iets steiler verband dan voor de andere groep. Voor de beeldvorming kun je dit ook zien als twee sigaren die deels over elkaar heen liggen.</p>
+<p>Dit betekent echter niet dat langere behandelingen minder volatiel zijn. Het feit dat je twee sigaarwolken ziet, heeft meer te maken met hoe we volatiliteit meten. De manier waarop we dat doen houdt nog niet goed rekening met de duur van behandeltrajecten. Hoe langer een behandeltraject, hoe minder groot de invloed van een enkele maand (de deler in de standaardafwijking).</p>
+<p>Het gevolg is dus dat we de volatiliteit van langere behandeltrajecten onderschatten in verhouding tot kortere behandelingen. Als we een manier hebben waarop we beter rekening kunnen houden met de verschillen in de duur van behandeltrajecten dan zien we waarschijnlijk een ander plaatje. Er zal dan een meer enkelvoudige sigaarwolk ontstaan.</p>
+<p>Dit was een inleidende blog over volatiliteit in GGZ-behandelingen. In de komende weken werken we aan het vervolg en gaan we verder in op de statistische analyse.</p>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>
